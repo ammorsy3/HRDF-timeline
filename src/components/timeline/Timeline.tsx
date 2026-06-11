@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { APPROVAL_GATES, type Milestone } from "@/data/campaign";
 import { getMonthColumns, getTodayPct, getGanttPosition, formatDateAr, formatNum } from "@/lib/date";
-import { STATUS_COLORS } from "@/lib/status";
+import { STATUS_COLORS, getMilestoneRollup, ROLLUP_COLORS, ROLLUP_LABELS } from "@/lib/status";
 import TimelineLegend from "./TimelineLegend";
 
 const LANE_LABEL_W = 120; // px — sticky label column width
@@ -158,10 +158,19 @@ export default function Timeline({ milestones }: Props) {
                       backgroundColor: mi % 2 === 0 ? "#ffffff" : "#F9FAFB",
                     }}
                   >
-                    <div className="flex flex-col gap-0.5" style={{ direction: "rtl" }}>
+                    <div className="flex flex-col gap-1" style={{ direction: "rtl" }}>
                       <span className="text-[11px] font-bold leading-tight" style={{ color: milestone.color }}>
                         {formatNum(milestone.orderIndex)}. {milestone.title}
                       </span>
+                      <div className="flex items-center gap-1">
+                        <div
+                          className="w-2 h-2 rounded-full shrink-0"
+                          style={{ backgroundColor: ROLLUP_COLORS[getMilestoneRollup(milestone.deliverables)] }}
+                        />
+                        <span className="text-[9px] text-muted-foreground leading-none">
+                          {ROLLUP_LABELS[getMilestoneRollup(milestone.deliverables)]}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
