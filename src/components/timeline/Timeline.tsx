@@ -218,11 +218,6 @@ export default function Timeline({ milestones }: Props) {
                             {isDone && "✓ "}{d.title}
                           </span>
 
-                          {/* Status dot */}
-                          <div
-                            className="absolute left-1.5 top-1.5 w-2 h-2 rounded-full shrink-0"
-                            style={{ backgroundColor: STATUS_COLORS[d.status] }}
-                          />
                         </div>
                       );
                     })}
