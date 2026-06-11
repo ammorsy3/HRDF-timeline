@@ -182,13 +182,17 @@ export default function Timeline({ milestones }: Props) {
                       const topPx = LANE_PAD + row * ROW_H;
                       const color = milestone.color;
                       const isDone = d.status === "done";
+                      // Right-anchor bars near the track's end so they grow leftward
+                      const nearEnd = leftPct + widthPct > 90;
+                      const rightPct = Math.max(0, 100 - leftPct - widthPct);
                       return (
                         <div
                           key={d.id}
                           className="absolute h-9 rounded-lg flex items-center px-2"
                           style={{
-                            left: `${leftPct}%`,
-                            width: `max(${widthPct}%, auto)`,
+                            ...(nearEnd
+                              ? { right: `${rightPct}%` }
+                              : { left: `${leftPct}%`, width: `${widthPct}%` }),
                             minWidth: "max-content",
                             top: topPx,
                             backgroundColor: isDone ? color : `${color}33`,
