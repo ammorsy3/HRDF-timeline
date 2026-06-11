@@ -1,26 +1,117 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
+/* ── HRDF Brand Tokens ─────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary brand blue — exact hex sampled from HRDF logo (#224D83) */
+  --hrdf-blue:        #224D83;
+  --hrdf-blue-deep:   #1A3C66;   /* header band, deep accents */
+  --hrdf-blue-darker: #122848;   /* nav bar */
+  --hrdf-blue-soft:   #E8EFF8;   /* hover states, tinted bg */
+  --hrdf-orange:      #E08A2C;   /* awaiting-approval / accent */
+  --hrdf-green:       #4FA45C;   /* done / success */
+  --hrdf-purple:      #6D5BD0;   /* المؤثرون lane */
+
+  /* Semantic tokens wired to shadcn */
+  --background:            #F4F6FA;
+  --foreground:            #1A2A40;
+  --card:                  #FFFFFF;
+  --card-foreground:       #1A2A40;
+  --popover:               #FFFFFF;
+  --popover-foreground:    #1A2A40;
+  --primary:               #224D83;
+  --primary-foreground:    #FFFFFF;
+  --secondary:             #EAF1FA;
+  --secondary-foreground:  #1C3D6E;
+  --muted:                 #EAF1FA;
+  --muted-foreground:      #6B7A90;
+  --accent:                #EAF1FA;
+  --accent-foreground:     #1C3D6E;
+  --destructive:           #E53E3E;
+  --border:                #D6E0F0;
+  --input:                 #D6E0F0;
+  --ring:                  #224D83;
+  --radius:                0.75rem;
+
+  /* Status colors */
+  --status-not-started:        #94A3B8;
+  --status-in-progress:        #2C5A9E;
+  --status-awaiting-approval:  #E08A2C;
+  --status-done:               #4FA45C;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background:         var(--background);
+  --color-foreground:         var(--foreground);
+  --color-card:               var(--card);
+  --color-card-foreground:    var(--card-foreground);
+  --color-popover:            var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary:            var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary:          var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:              var(--muted);
+  --color-muted-foreground:   var(--muted-foreground);
+  --color-accent:             var(--accent);
+  --color-accent-foreground:  var(--accent-foreground);
+  --color-destructive:        var(--destructive);
+  --color-border:             var(--border);
+  --color-input:              var(--input);
+  --color-ring:               var(--ring);
+  --font-sans:                var(--font-arabic);
+  --radius-sm:   calc(var(--radius) * 0.6);
+  --radius-md:   calc(var(--radius) * 0.8);
+  --radius-lg:   var(--radius);
+  --radius-xl:   calc(var(--radius) * 1.4);
+  --radius-2xl:  calc(var(--radius) * 1.8);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "kern" 1;
+  }
+  html {
+    @apply font-sans;
+    /* smooth scrolling for timeline jumps */
+    scroll-behavior: smooth;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── RTL utilities ──────────────────────────────────────── */
+[dir="rtl"] {
+  text-align: right;
+}
+
+/* ── Timeline LTR island inside RTL page ───────────────── */
+.timeline-track {
+  direction: ltr;
+}
+.timeline-track .lane-label {
+  direction: rtl;
+  text-align: right;
+}
+
+/* ── Scrollbar styling (timeline) ──────────────────────── */
+.timeline-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hrdf-blue) var(--hrdf-blue-soft);
+}
+.timeline-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.timeline-scroll::-webkit-scrollbar-track {
+  background: var(--hrdf-blue-soft);
+  border-radius: 3px;
+}
+.timeline-scroll::-webkit-scrollbar-thumb {
+  background: var(--hrdf-blue);
+  border-radius: 3px;
 }
