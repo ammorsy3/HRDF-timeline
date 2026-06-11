@@ -29,6 +29,14 @@ export interface ApprovalGate {
   date: string; // YYYY-MM-DD
 }
 
+export interface LaunchEvent {
+  id: string;
+  label: string;
+  startDate: string; // YYYY-MM-DD
+  endDate: string;   // YYYY-MM-DD
+  color: string;
+}
+
 // ── PROJECT ──────────────────────────────────────────────────────────────────
 
 export const PROJECT = {
@@ -38,6 +46,18 @@ export const PROJECT = {
   startDate: "2026-06-01",
   endDate: "2026-12-31",
 } as const;
+
+// ── LAUNCH EVENTS (prominent campaign milestone bars) ────────────────────────
+
+export const LAUNCH_EVENTS: LaunchEvent[] = [
+  {
+    id: "launch-1",
+    label: "إطلاق الحملة الإعلانية",
+    startDate: "2026-10-01",
+    endDate: "2026-12-31",
+    color: "#4FA45C",
+  },
+];
 
 // ── APPROVAL GATES (timeline diamonds) ───────────────────────────────────────
 
