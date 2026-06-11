@@ -1,7 +1,5 @@
 import { ExternalLink } from "lucide-react";
 import { formatDateAr } from "@/lib/date";
-import { STATUS_LABELS, STATUS_COLORS } from "@/lib/status";
-import StatusDot from "./StatusDot";
 import AdminControls from "@/components/admin/AdminControls";
 import type { Deliverable } from "@/data/campaign";
 
@@ -16,15 +14,6 @@ export default function DeliverableRow({ deliverable: d, isAdmin }: Props) {
       <div className="flex items-start justify-between gap-3">
         {/* Right: status + title + dates */}
         <div className="flex flex-col gap-1 min-w-0 flex-1">
-          <div className="flex items-center gap-2 flex-wrap">
-            <StatusDot status={d.status} size="sm" />
-            <span
-              className="text-xs font-medium"
-              style={{ color: STATUS_COLORS[d.status] }}
-            >
-              {STATUS_LABELS[d.status]}
-            </span>
-          </div>
           <p className="text-sm font-semibold text-foreground leading-snug">
             {d.title}
           </p>

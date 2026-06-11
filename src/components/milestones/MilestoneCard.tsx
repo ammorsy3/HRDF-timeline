@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { getMilestoneRollup, ROLLUP_COLORS, ROLLUP_LABELS } from "@/lib/status";
+import { getMilestoneRollup } from "@/lib/status";
 import { formatDateAr } from "@/lib/date";
 import DeliverableRow from "./DeliverableRow";
 import type { Milestone } from "@/data/campaign";
@@ -55,16 +55,6 @@ export default function MilestoneCard({ milestone, defaultOpen = true, isAdmin }
         {/* Right: badge + title + status */}
         <div className="flex items-center gap-3 min-w-0">
           <div className="flex flex-col items-end gap-1 min-w-0">
-            <div className="flex items-center gap-2">
-              {/* Rollup dot */}
-              <div
-                className="w-2.5 h-2.5 rounded-full"
-                style={{ backgroundColor: ROLLUP_COLORS[rollup] }}
-              />
-              <span className="text-[11px] font-medium" style={{ color: ROLLUP_COLORS[rollup] }}>
-                {ROLLUP_LABELS[rollup]}
-              </span>
-            </div>
             <h3 className="text-base font-bold text-foreground truncate text-right">
               {milestone.title}
             </h3>
