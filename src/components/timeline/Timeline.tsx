@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { APPROVAL_GATES, LAUNCH_EVENTS, type Milestone } from "@/data/campaign";
+import { APPROVAL_GATES, type Milestone } from "@/data/campaign";
 import { getMonthColumns, getTodayPct, getGanttPosition, formatDateAr, formatNum } from "@/lib/date";
 import { STATUS_COLORS } from "@/lib/status";
 import TimelineLegend from "./TimelineLegend";
@@ -139,51 +139,6 @@ export default function Timeline({ milestones }: Props) {
               </span>
             </div>
 
-            {/* Launch events row */}
-            <div
-              className="relative flex border-b border-border bg-white"
-            >
-              {/* Label */}
-              <div
-                className="sticky left-0 z-10 shrink-0 flex items-center justify-end px-3 border-r border-border bg-white"
-                style={{ width: LANE_LABEL_W, height: ROW_H + LANE_PAD * 2 }}
-              >
-                <span className="text-[10px] font-bold text-[#4FA45C]" style={{ direction: "rtl" }}>
-                  الإطلاق
-                </span>
-              </div>
-              {/* Track */}
-              <div className="relative flex-1" style={{ minWidth: TRACK_MIN_W, height: ROW_H + LANE_PAD * 2 }}>
-                {LAUNCH_EVENTS.map((ev) => {
-                  const { leftPct, widthPct } = getGanttPosition(ev.startDate, ev.endDate);
-                  return (
-                    <div
-                      key={ev.id}
-                      className="group absolute flex items-center px-3 rounded-xl"
-                      style={{
-                        left: `${leftPct}%`,
-                        width: `${widthPct}%`,
-                        top: LANE_PAD,
-                        height: ROW_H - 4,
-                        backgroundColor: ev.color,
-                        border: `2px solid ${ev.color}`,
-                        minWidth: "max-content",
-                      }}
-                      title={`${ev.label}\n${formatDateAr(ev.startDate)} — ${formatDateAr(ev.endDate)}`}
-                    >
-                      <span className="text-white text-[11px] font-bold whitespace-nowrap" style={{ direction: "rtl" }}>
-                        {ev.label}
-                      </span>
-                      {/* Hover tooltip */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900/90 text-white text-[10px] rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-30 pointer-events-none" style={{ direction: "rtl" }}>
-                        {formatDateAr(ev.startDate)} — {formatDateAr(ev.endDate)}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
             {/* Milestone lanes */}
             {milestones.map((milestone, mi) => {
               const rowMap = assignRows(milestone.deliverables);
@@ -227,16 +182,17 @@ export default function Timeline({ milestones }: Props) {
                       const topPx = LANE_PAD + row * ROW_H;
                       const color = milestone.color;
                       const isDone = d.status === "done";
-                      // Right-anchor bars near the track's end so they grow leftward
-                      const nearEnd = leftPct + widthPct > 90;
+                      // For bars near/at the track end: anchor with both left+right so the bar
+                      // fills its full date span AND the label doesn't overflow the boundary.
                       const rightPct = Math.max(0, 100 - leftPct - widthPct);
+                      const nearEnd = rightPct < 10;
                       return (
                         <div
                           key={d.id}
                           className="group absolute h-9 rounded-lg flex items-center px-2"
                           style={{
                             ...(nearEnd
-                              ? { right: `${rightPct}%` }
+                              ? { left: `${leftPct}%`, right: `${rightPct}%` }
                               : { left: `${leftPct}%`, width: `${widthPct}%` }),
                             minWidth: "max-content",
                             top: topPx,

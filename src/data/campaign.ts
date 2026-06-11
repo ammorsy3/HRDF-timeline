@@ -154,6 +154,14 @@ export const MILESTONES: Milestone[] = [
         driveUrl: null,
       },
       {
+        id: "d-3-3",
+        title: "إطلاق الحملة الإعلانية",
+        startDate: "2026-10-01",
+        endDate: "2026-12-31",
+        status: "not_started",
+        driveUrl: null,
+      },
+      {
         id: "d-3-2",
         title: "التقرير النهائي للحملة",
         startDate: "2026-12-21",
