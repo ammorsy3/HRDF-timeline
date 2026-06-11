@@ -254,6 +254,7 @@ export default function Timeline({ milestones }: Props) {
           اسحب يميناً أو يساراً لعرض الجدول الزمني
         </p>
 
+        <TimelineLegend />
       </div>
     </section>
   );
