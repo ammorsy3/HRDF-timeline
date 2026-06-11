@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { PROJECT } from "@/data/campaign";
 import SummaryCards from "./SummaryCards";
+import LogoutButton from "./LogoutButton";
 import type { Deliverable, ApprovalGate } from "@/data/campaign";
 
 interface Props {
@@ -21,9 +22,12 @@ export default function ProjectHeader({ deliverables, gates }: Props) {
           className="object-contain"
           priority
         />
-        <span className="text-xs text-white/60 font-medium tracking-wide">
-          خطة التنفيذ — 2026
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="text-xs text-white/60 font-medium tracking-wide">
+            خطة التنفيذ — 2026
+          </span>
+          <LogoutButton />
+        </div>
       </div>
 
       {/* Title block */}
